@@ -18,6 +18,8 @@ void recorrer_preorden(NODO *);
 void recorrer_inorden(NODO *);
 void recorrer_postorden(NODO *);
 void recorrer_amplitud(NODO *);
+void peso(NODO *);
+
 
 int main(){
 	system("Title Recorridos Arboles");
@@ -27,6 +29,8 @@ int main(){
 	arbol->raiz=NULL;
 	arbol->altura=0;
 	arbol->peso=0;
+	int peso;
+	
 	
 	do{
     printf("Introduce una numero: (0 para cancelar)\n");
@@ -45,12 +49,35 @@ int main(){
 	recorrer_postorden(arbol->raiz);
 	printf("Impresion del arbol en amplitud***\n");
 	recorrer_amplitud(arbol->raiz);
+	
+
+	//peso(arbol->peso);
+	//imprimir_nodoizq(arbol->raiz);
+
 	return;
 }
+
+int altura(NODO* raiz) {
+    if (raiz == NULL) {
+        return 0;
+    }
+    int altura_izquierda = altura(raiz->izq);
+    int altura_derecha = altura(raiz->der);
+    if (altura_izquierda > altura_derecha) {
+        return altura_izquierda + 1;
+    }else{
+        return altura_derecha + 1;
+    }
+}
+
+
+
+//printf("Peso: \n", peso);
 
 void agregar_a_arbol(ARBOL *aux2, int number){
 	NODO *nuevo_nodo=NULL;
 	int alt=1;
+	int peso=0;
 	nuevo_nodo=(NODO *) malloc(sizeof(NODO));
 	if(nuevo_nodo==NULL){
     	printf("ERROR DE MEMORIA \n");
@@ -77,6 +104,8 @@ void agregar_a_arbol(ARBOL *aux2, int number){
     p_aux=p_aux->der;
     }
     alt++;
+
+    
 	}
 	if(number<p_anterior->numero){
 	    p_anterior->izq=nuevo_nodo;
@@ -84,10 +113,16 @@ void agregar_a_arbol(ARBOL *aux2, int number){
 	    p_anterior->der=nuevo_nodo;
 	}
 	aux2->peso++;
+	printf("Nodo derecho: %d \n", p_anterior->der);
+	printf("Nodo izquierdo: %d \n", p_anterior->izq);
 	aux2->altura=alt;
+	printf("Altura: %d \n", alt);
+	printf("Peso: %d \n", aux2->peso);
 	}
+
 	return;
 }
+
 
 void recorrer_preorden(NODO *nodo){
 	if(nodo!=NULL){
